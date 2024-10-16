@@ -1,28 +1,24 @@
 pipeline {
-    agent any
 
     parameters {
-        choice(name: 'action', choices: ['apply', 'destroy'], description: 'Pick something')
+        booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
+    } 
+    environment {
+        AWS_ACCESS_KEY_ID     = AKIA5G2VGWHGDJ2KZSP6
+        AWS_SECRET_ACCESS_KEY = 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
     }
 
+   agent  any
     stages {
-        stage('Checkout') {
+        stage('checkout') {
             steps {
-                // Ensure the repository is checked out
-                checkout scm
-            }
-        }
-        stage('Init') {
-            steps {
-                wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
-                    // Combine cd and terraform commands
-                    sh '''
-                        cd vpc
-                        terraform init -reconfigure
-                    '''
+                 script{
+                        dir("terraform")
+                        {
+                            git "https://github.com/yeshwanthlm/Terraform-Jenkins.git"
+                        }
+                    }
                 }
             }
-        }
-  }
-
+    }
 }
