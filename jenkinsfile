@@ -1,17 +1,27 @@
 pipeline {
-    agent any  // This specifies that the pipeline can run on any available agent
+    agent any
 
     parameters {
         choice(name: 'action', choices: ['apply', 'destroy'], description: 'Pick something')
     }
 
     stages {
-        stage('Init') {
+        stage('Checkout') {
             steps {
-                sh """
-                    sh 'cd /var/lib/jenkins/workspace/vpc && terraform init '
-                """
+                // Ensure the repository is checked out
+                checkout scm
             }
         }
-    }
-}
+        stage('Init') {
+            steps {
+                wrap([$class: 'AnsiColorBuildWrapper', colorMapName: 'xterm']) {
+                    // Combine cd and terraform commands
+                    sh '''
+                        cd vpc
+                        terraform init -reconfigure
+                    '''
+                }
+            }
+        }
+
+  
