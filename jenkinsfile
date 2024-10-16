@@ -9,7 +9,6 @@ pipeline {
         stage('Init') {
             steps {
                 sh """
-                    sh 'ls -la'  // List contents for debugging
                     sh 'cd vpc && terraform init -reconfigure'
                 """
             }
