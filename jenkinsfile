@@ -1,24 +1,57 @@
 pipeline {
+    agent any
 
     parameters {
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
     } 
+
     environment {
-        AWS_ACCESS_KEY_ID     = AKIA5G2VGWHGDJ2KZSP6
-        AWS_SECRET_ACCESS_KEY = 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
+        AWS_ACCESS_KEY_ID     = 'AKIA5G2VGWHGDJ2KZSP6'  // Make sure to keep sensitive information secure
+        AWS_SECRET_ACCESS_KEY = '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'
     }
 
-   agent  any
     stages {
-        stage('checkout') {
+        stage('Checkout') {
             steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "https://github.com/umamaheshy707/vpc.git"
-                        }
+                script {
+                    dir("terraform") {
+                        git url: "https://github.com/umamaheshy707/vpc.git"
                     }
                 }
             }
+        }
+        
+        stage('Init') {
+            steps {
+                script {
+                    dir("terraform") {
+                        sh 'terraform init'
+                    }
+                }
+            }
+        }
+        
+        stage('Plan') {
+            steps {
+                script {
+                    dir("terraform") {
+                        sh 'terraform plan'
+                    }
+                }
+            }
+        }
+
+        stage('Apply') {
+            when {
+                expression { params.autoApprove }
+            }
+            steps {
+                script {
+                    dir("terraform") {
+                        sh 'terraform apply -auto-approve'
+                    }
+                }
+            }
+        }
     }
 }
