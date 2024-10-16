@@ -9,7 +9,7 @@ pipeline {
         stage('Init') {
             steps {
                 sh """
-                    sh 'cd vpc && terraform init -reconfigure'
+                    sh 'cd /var/lib/jenkins/workspace/vpc && terraform init '
                 """
             }
         }
