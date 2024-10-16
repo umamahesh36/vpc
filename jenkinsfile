@@ -1,14 +1,6 @@
 pipeline {
-    agent any
-    }
-    options {
-        ansiColor('xterm')
-        // timeout(time: 1, unit: 'HOURS')
-        // disableConcurrentBuilds()
-    }
-    pipeline {
-    agent any
-    }
+    agent any  // This specifies that the pipeline can run on any available agent
+
     options {
         ansiColor('xterm')
         // timeout(time: 1, unit: 'HOURS')
@@ -18,7 +10,7 @@ pipeline {
     parameters {
         choice(name: 'action', choices: ['apply', 'destroy'], description: 'Pick something')
     }
-    // build
+
     stages {
         stage('Init') {
             steps {
@@ -28,4 +20,3 @@ pipeline {
                 """
             }
         }
-    }
