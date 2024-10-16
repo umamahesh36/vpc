@@ -14,7 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    dir("terraform") {
+                    dir("vpc") {
                         git url: "https://github.com/umamaheshy707/vpc.git"
                     }
                 }
@@ -24,7 +24,7 @@ pipeline {
         stage('Init') {
             steps {
                 script {
-                    dir("terraform") {
+                    dir("vpc") {
                         sh 'terraform init'
                     }
                 }
@@ -34,7 +34,7 @@ pipeline {
         stage('Plan') {
             steps {
                 script {
-                    dir("terraform") {
+                    dir("vpc") {
                         sh 'terraform plan'
                     }
                 }
@@ -47,7 +47,7 @@ pipeline {
             }
             steps {
                 script {
-                    dir("terraform") {
+                    dir("vpc") {
                         sh 'terraform apply -auto-approve'
                     }
                 }
