@@ -8,7 +8,7 @@ pipeline {
         }
          stage('Terraform Init') {
             steps {
-                sh 'cd vpc  && terraform init'
+                sh 'cd /var/lib/jenkins/workspace/terraform-vpc  && terraform init'
             }
         }
     }
