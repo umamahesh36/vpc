@@ -6,23 +6,8 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/umamaheshy707/vpc.git', credentialsId: 'github-credentials'
             }
         }
-        stage('Init') {
+         stage('Terraform Init') {
             steps {
-                echo 'Running Init stage...'
-                // Add init steps here
+                sh 'cd vpc  && terraform init'
             }
         }
-        stage('Plan') {
-            steps {
-                echo 'Running Plan stage...'
-                // Add plan steps here
-            }
-        }
-        stage('Apply') {
-            steps {
-                echo 'Running Apply stage...'
-                // Add apply steps here
-            }
-        }
-    }
-}
