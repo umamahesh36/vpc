@@ -11,7 +11,7 @@ pipeline {
                 sh 'cd /var/lib/jenkins/workspace/terraform-vpc  && terraform init'
             }
         }
-         stage('Terraform Init') {
+         stage('Terraform Plan') {
             steps {
                 sh 'cd /var/lib/jenkins/workspace/terraform-vpc  && terraform plan'
             }
