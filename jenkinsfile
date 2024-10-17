@@ -16,10 +16,5 @@ pipeline {
                 sh 'cd /var/lib/jenkins/workspace/terraform-vpc  && terraform plan'
             }
         }
-        stage('Terraform Apply') {
-            steps {
-                sh 'cd /var/lib/jenkins/workspace/terraform-vpc  && terraform apply'
-            }
-        }
     }
 }
